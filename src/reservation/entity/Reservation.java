@@ -6,39 +6,54 @@
 package reservation.entity;
 
 import java.io.Serializable;
-import javax.persistence.Column;
+import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author formation
  */
 @Entity
-@Table(name = "room") 
-public class Chambre implements Serializable {
+public class Reservation implements Serializable {
    
+    //pour avoir des etats 
     
+    public enum EtatReservation{
+        Non_valide,
+        Valide,
+        TERMINE,
+        ANNULE
+    }
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Temporal(TemporalType.DATE)
+    private Date dateDebut;
     
-    @Column(unique = true, nullable = false, length = 32)
-    private String nom;
-    @Column(length = 4096)
-    private String description;
+    @Temporal(TemporalType.DATE)
+    private Date dateFin;
     
-    @Column(nullable = false ,name = "price" )
-    private Double prix;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateHeureReservation;
     
+   /**
+    * EtatReservation fait référence à public enum EtatReservation
+    */
+    @Enumerated(EnumType.STRING)
+    private EtatReservation etat;
+
     public Long getId() {
         return id;
     }
-    
 
     public void setId(Long id) {
         this.id = id;
@@ -54,10 +69,10 @@ public class Chambre implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Chambre)) {
+        if (!(object instanceof Reservation)) {
             return false;
         }
-        Chambre other = (Chambre) object;
+        Reservation other = (Reservation) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -66,7 +81,7 @@ public class Chambre implements Serializable {
 
     @Override
     public String toString() {
-        return "reservation.entity.Chambre[ id=" + id + " ]";
+        return "reservation.entity.Reservation[ id=" + id + " ]";
     }
     
 }
