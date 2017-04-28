@@ -20,6 +20,13 @@ import reservation.entity.Adresse;
  */
 public class JPATest {
     
+    
+    @Test
+    public void demarrerJPA(){
+        
+        Persistence.createEntityManagerFactory("PU").createEntityManager();
+    }
+    
    // @Test
     public void recupChambreId1(){
          EntityManagerFactory factory = Persistence.createEntityManagerFactory("PU");
@@ -49,7 +56,7 @@ public class JPATest {
 
     }
 
-    @Test
+   // @Test
     public void ajouterChambre() {
 
         EntityManager em = Persistence.createEntityManagerFactory("PU").createEntityManager();
